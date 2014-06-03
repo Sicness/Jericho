@@ -1,4 +1,4 @@
-/**
+package ru.darklogic.jericho; /**
  * Created by abalashov on 6/1/14.
  */
 

@@ -1,4 +1,4 @@
-/**
+package ru.darklogic.jericho; /**
  * Created by abalashov on 6/1/14.
  */
 
@@ -6,7 +6,7 @@
 public class JerichoMonitor {
     public static void main(String[] args){
         ZmqMonitor monitor = new ZmqMonitor();
-        try { monitor.connect("tcp://192.168.2.7:5000"); }
+        try { monitor.connect("tcp://127.0.0.1:5000"); }
         catch(BindFormatException e){
             System.out.println("ERROR: wrong zmq monitor bind string.");
             System.exit(1);
