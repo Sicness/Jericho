@@ -9,8 +9,24 @@
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>monitor</module>
+        <module>pipeline</module>
     </modules>
     <packaging>pom</packaging>
+
+    <!-- More Project Information -->
+    <name>Jericho</name>
+    <description>Implementation of personal smart home</description>
+    <url>https://github.com/Sicness/Jericho</url>
+    <licenses><license><name>GPLv3</name></license></licenses>
+    <scm>
+        <url>scm:git:https://github.com/Sicness/Jericho.git</url>
+        <connection>scm:git:https://github.com/Sicness/Jericho.git</connection>
+    </scm>
+    <developers>
+        <developer>
+            <name>Anton Balashov</name>
+        </developer>
+    </developers>
 
     <dependencies>
         <dependency>
