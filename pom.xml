@@ -19,12 +19,14 @@
     <url>https://github.com/Sicness/Jericho</url>
     <licenses><license><name>GPLv3</name></license></licenses>
     <scm>
-        <url>scm:git:https://github.com/Sicness/Jericho.git</url>
+        <url>git@github.com:Sicness/Jericho.git</url>
         <connection>scm:git:https://github.com/Sicness/Jericho.git</connection>
+        <developerConnection>scm:git:git@github.com:Sicness/Jericho.git</developerConnection>
     </scm>
     <developers>
         <developer>
             <name>Anton Balashov</name>
+            <email>sicness@darklogic.ru</email>
         </developer>
     </developers>
 
