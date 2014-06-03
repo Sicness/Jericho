@@ -1,6 +1,8 @@
 /**
  * Created by abalashov on 6/1/14.
  */
+
+/** The main class for monitor module */
 public class JerichoMonitor {
     public static void main(String[] args){
         ZmqMonitor monitor = new ZmqMonitor();

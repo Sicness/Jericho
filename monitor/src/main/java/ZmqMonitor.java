@@ -4,14 +4,16 @@
 
 import org.zeromq.ZMQ;
 
+/** will be raised when connection string is not like "tcp://<ip>:<port>" */
 class BindFormatException extends Exception{};
 
 public class ZmqMonitor {
     private ZMQ.Socket sub;
 
     /**
-     * Constructor for zmq monitor
+     * Connect to remote ZMQ.PUB
      * @param bind tcp://<ip>:<port>
+     * @throws BindFormatException
      */
     public void connect(String bind) throws BindFormatException{
         if (! isBindGood(bind)){
@@ -25,11 +27,19 @@ public class ZmqMonitor {
         sub.subscribe(new byte[0]);
     }
 
+    /**
+     * Check does bind var meet required format
+     * @param bind string in format "tcp://<ip>:<port>"
+     * @return does bind var meet required format
+     */
     public static boolean isBindGood(String bind){
         return (bind instanceof String) && bind.matches("^tcp://\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}:\\d{1,5}$");
     }
 
-    /** Get the next message */
+    /**
+     * Get the next message from queue
+     * @return received messages in type byte[]
+     */
     public byte[] recv(){
         return this.sub.recv();
     }
