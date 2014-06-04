@@ -6,12 +6,28 @@ package ru.darklogic.jericho;
 
 import org.zeromq.ZMQ;
 
+import java.io.IOException;
+
 public class Pipeline {
+     static PropsControl props = new PropsControl();
+    static String queueBind = null;
+
     public static void main(String[] args){
+        String bindAddr = null;
+        try {
+            props.read("/jericho.properties");
+            queueBind = props.get("zmq.queue.bind");
+            if (queueBind == null) throw new IOException("Can't find zmq.queue.bind in props");
+        }
+        catch (IOException e){
+            System.out.println("Error at reading properties: " + e);
+            System.exit(1);
+        }
+
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket queue = context.socket(ZMQ.PUB);
 
-        queue.bind("tcp://0.0.0.0:5000");
+        queue.bind(queueBind);
 
         ZMQ.Socket incomeSock = context.socket(ZMQ.REP);
         incomeSock.bind("tcp://0.0.0.0:6000");
