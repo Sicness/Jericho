@@ -14,8 +14,16 @@
 
 
     <properties>
-        <main.class>ru.darklogic.jericho.JerichoMonitor</main.class>
+        <main.class>ru.darklogic.jericho.monitor.JerichoMonitor</main.class>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.darklogic.jericho</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

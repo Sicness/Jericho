@@ -17,6 +17,7 @@
         <module>monitor</module>
         <module>pipeline</module>
         <module>gwSocket</module>
+        <module>common</module>
     </modules>
     <packaging>pom</packaging>
 

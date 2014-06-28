@@ -1,4 +1,4 @@
-package ru.darklogic.jericho;
+package ru.darklogic.jericho.common;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,10 +10,10 @@ import java.util.Properties;
 public class PropsControl {
     Properties props = new Properties();
 
-    public void read(String finaName) throws IOException {
+    public void read(String fileName) throws IOException {
         InputStream stream = null;
-        stream = this.getClass().getResourceAsStream(finaName);
-        if (stream == null) throw new IOException("Can't find properties file " + finaName);
+        stream = this.getClass().getResourceAsStream(fileName);
+        if (stream == null) throw new IOException("Can't find properties file " + fileName);
         props.load(stream);
     }
 

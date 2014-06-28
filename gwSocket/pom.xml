@@ -13,9 +13,16 @@
     <packaging>jar</packaging>
 
     <properties>
-        <main.class>ru.darklogic.jericho.GwSock</main.class>
+        <main.class>ru.darklogic.jericho.gwSocket.GwSock</main.class>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>ru.darklogic.jericho</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

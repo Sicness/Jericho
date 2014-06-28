@@ -1,4 +1,4 @@
-package ru.darklogic.jericho; /**
+package ru.darklogic.jericho.gwSocket; /**
  * Created by abalashov on 6/3/14.
  */
 
@@ -15,7 +15,7 @@ public class TcpSock {
      * @throws IOException
      */
     public void bind(int port) throws IOException {
-            sock = new ServerSocket(port) ;
+            sock = new ServerSocket(port);
     }
 
     /** Get a new client connection and receive <b>one</b> message from it
@@ -23,6 +23,7 @@ public class TcpSock {
      * @return Received from a client String
      * @throws IOException
      */
+
     public String recv() throws IOException {
         Socket client = sock.accept();
         BufferedReader buf = new BufferedReader(new InputStreamReader(client.getInputStream()));

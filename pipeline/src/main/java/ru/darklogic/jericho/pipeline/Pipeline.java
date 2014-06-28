@@ -1,15 +1,16 @@
-package ru.darklogic.jericho;
+package ru.darklogic.jericho.pipeline;
 
 /**
  * Created by abalashov on 6/2/14.
  */
 
 import org.zeromq.ZMQ;
+import ru.darklogic.jericho.common.PropsControl;
 
 import java.io.IOException;
 
 public class Pipeline {
-     static PropsControl props = new PropsControl();
+    static PropsControl props = new PropsControl();
     static String queueBind = null;
 
     public static void main(String[] args){
@@ -27,6 +28,7 @@ public class Pipeline {
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket queue = context.socket(ZMQ.PUB);
 
+        System.out.println("Binding queue: " + queueBind);
         queue.bind(queueBind);
 
         ZMQ.Socket incomeSock = context.socket(ZMQ.REP);

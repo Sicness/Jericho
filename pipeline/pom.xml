@@ -10,10 +10,19 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.darklogic.jericho</groupId>
     <artifactId>pipeline</artifactId>
+    <packaging>jar</packaging>
 
     <properties>
-        <main.class>ru.darklogic.jericho.Pipeline</main.class>
+        <main.class>ru.darklogic.jericho.pipeline.Pipeline</main.class>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ru.darklogic.jericho</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

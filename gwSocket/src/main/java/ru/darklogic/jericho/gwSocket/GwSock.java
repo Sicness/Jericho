@@ -1,21 +1,30 @@
-package ru.darklogic.jericho; /**
+package ru.darklogic.jericho.gwSocket; /**
  * Created by abalashov on 6/3/14.
  */
 
 import org.zeromq.ZMQ;
 
 import java.io.IOException;
+import ru.darklogic.jericho.common.PropsControl;
 
 public class GwSock {
+    static PropsControl props = new PropsControl();
     public static void main(String[] args){
+        try {
+            props.read("/jericho.properties");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
         ZMQ.Context context = ZMQ.context(1);
         TcpSock sock = new TcpSock();
         ZMQ.Socket zmq = context.socket(ZMQ.REQ);
 
         try {
-            zmq.connect("tcp://127.0.0.1:6000");
+            zmq.connect(props.get("zmq.queue.in"));
 
-            sock.bind(10001);
+            sock.bind(Integer.parseInt(props.get("gwSocket.tcp.bind")));
         }
         catch (IOException e){
             System.out.println(e.toString());
@@ -32,7 +41,5 @@ public class GwSock {
         catch (IOException e){
             System.out.println(e.toString());
         }
-
-
     }
 }

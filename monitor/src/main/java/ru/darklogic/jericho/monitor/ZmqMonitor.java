@@ -1,4 +1,4 @@
-package ru.darklogic.jericho; /**
+package ru.darklogic.jericho.monitor; /**
  * Created by abalashov on 6/1/14.
  */
 
@@ -16,15 +16,16 @@ public class ZmqMonitor {
      * @throws BindFormatException
      */
     public void connect(String bind) throws BindFormatException{
+        System.out.print("Trying to connect to " + bind +" ");
         if (! isBindGood(bind)){
             throw new BindFormatException();
         }
-
         ZMQ.Context context = ZMQ.context(1);
         sub = context.socket(ZMQ.SUB);
 
         sub.connect(bind);
         sub.subscribe(new byte[0]);
+        System.out.println("Done");
     }
 
     /**
