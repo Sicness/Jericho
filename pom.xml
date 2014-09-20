@@ -8,8 +8,8 @@
         <version>7</version>
     </parent>
 
-    <groupId>ru.darklogic</groupId>
-    <artifactId>jericho</artifactId>
+    <groupId>ru.darklogic.jericho</groupId>
+    <artifactId>super-pom</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <modules>
         <module>monitor</module>
