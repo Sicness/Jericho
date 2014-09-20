@@ -24,6 +24,8 @@ public class GwSock {
         try {
             zmq.connect(props.get("zmq.queue.in"));
 
+            System.out.println("Binding TCP socket on " +
+                    props.get("gwSocket.tcp.bind") + "...");
             sock.bind(Integer.parseInt(props.get("gwSocket.tcp.bind")));
         }
         catch (IOException e){

@@ -16,6 +16,7 @@
         <module>pipeline</module>
         <module>gwSocket</module>
         <module>common</module>
+        <module>sound</module>
     </modules>
     <packaging>pom</packaging>
 
