@@ -16,24 +16,12 @@ import javazoom.jl.player.Player;
 
 public class Ultra {
 
-    public Ultra(String audioUlr) throws IOException {
-        playing = false;
-        InputStream is = new BufferedInputStream(new URL(audioUlr).openConnection().getInputStream());
-        Player player = null;
-        try {
-            player = new Player(is);
-        } catch (JavaLayerException e) {
-            e.printStackTrace();
-        }
-        try {
-            player.play();
-        } catch (JavaLayerException e) {
-            e.printStackTrace();
-        }
+    public Ultra(String audioUlr)  {
+        url = audioUlr;
     }
 
     public boolean isPlaying() {
-        return playing;
+        return (player != null);
     }
 
     public String getUrl() {
@@ -42,15 +30,41 @@ public class Ultra {
 
     public void play()
     {
-        //player.play();
+        InputStream is = null;
+        try {
+            is = new BufferedInputStream(new URL(url).openConnection().getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            player = new Player(is);
+        } catch (JavaLayerException e) {
+            e.printStackTrace();
+        }
+        try {
+            player. play();
+        } catch (JavaLayerException e) {
+            e.printStackTrace();
+        }
     }
 
     public void stop()
     {
-       // player.stop();
+       if (player == null)
+           return;
+
+        player.close();
+        player = null;
     }
 
-    private boolean playing;
-    private String url;
+    public void toggle()
+    {
+        if (player != null)
+            stop();
+        else
+            play();
+    }
 
+    Player player = null;
+    private String url;
 }
