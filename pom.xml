@@ -88,6 +88,28 @@
                         </archive>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy-jericho-properties</id>
+                            <phase>generate-resources</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.build.directory}/classes</outputDirectory>
+                                <overwrite>false</overwrite>
+                                <resources>
+                                    <resource>
+                                        <directory>../common/src/main/resources</directory>
+                                        <include>jericho.properties</include>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
