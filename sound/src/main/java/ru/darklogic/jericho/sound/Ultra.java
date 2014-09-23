@@ -14,10 +14,18 @@ import javazoom.jl.player.Player;
  */
 
 
-public class Ultra {
+public class Ultra extends Thread{
 
     public Ultra(String audioUlr)  {
         url = audioUlr;
+    }
+
+    public void run() {
+        try {
+            player.play();
+        } catch (JavaLayerException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isPlaying() {
@@ -41,30 +49,19 @@ public class Ultra {
         } catch (JavaLayerException e) {
             e.printStackTrace();
         }
-        try {
-            player. play();
-        } catch (JavaLayerException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void stop()
-    {
-       if (player == null)
-           return;
-
-        player.close();
-        player = null;
+        start();
     }
 
     public void toggle()
     {
-        if (player != null)
-            stop();
-        else
+        if (player == null)
             play();
+        else {
+            player.close();
+            player = null;
+        }
     }
 
-    Player player = null;
+    private volatile Player player = null;
     private String url;
 }
