@@ -4,9 +4,6 @@ package ru.darklogic.jericho.monitor; /**
 
 import org.zeromq.ZMQ;
 
-/** will be raised when connection string is not like "tcp://<ip>:<port>" */
-class BindFormatException extends Exception{};
-
 public class ZmqMonitor {
     private ZMQ.Socket sub;
 
