@@ -1,4 +1,4 @@
-package ru.darklogic.jericho.monitor;
+package ru.darklogic.jericho.common;
 
 /**
  * Created by Sicness on 22.09.2014.

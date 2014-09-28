@@ -4,7 +4,7 @@ package ru.darklogic.jericho;
  */
 
 import junit.framework.TestCase;
-import ru.darklogic.jericho.monitor.ZmqMonitor;
+import ru.darklogic.jericho.common.ZmqMonitor;
 
 public class ZmqMonitorTest extends junit.framework.TestCase {
     public void testTypeIsBindGood() {

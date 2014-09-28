@@ -9,4 +9,11 @@
     <packaging>jar</packaging>
 
     <artifactId>common</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.zeromq</groupId>
+            <artifactId>jeromq</artifactId>
+        </dependency>
+    </dependencies>
 </project>

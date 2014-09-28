@@ -1,8 +1,9 @@
-package ru.darklogic.jericho.monitor; /**
+package ru.darklogic.jericho.common; /**
  * Created by abalashov on 6/1/14.
  */
 
 import org.zeromq.ZMQ;
+import ru.darklogic.jericho.common.BindFormatException;
 
 public class ZmqMonitor {
     private ZMQ.Socket sub;
@@ -10,9 +11,9 @@ public class ZmqMonitor {
     /**
      * Connect to remote ZMQ.PUB
      * @param bind tcp://<ip>:<port>
-     * @throws BindFormatException
+     * @throws ru.darklogic.jericho.common.BindFormatException
      */
-    public void connect(String bind) throws BindFormatException{
+    public void connect(String bind) throws BindFormatException {
         System.out.print("Trying to connect to " + bind +" ");
         if (! isBindGood(bind)){
             throw new BindFormatException();

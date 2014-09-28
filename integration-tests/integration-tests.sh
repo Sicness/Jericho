@@ -1,27 +1,27 @@
 #!/bin/bash
 
-set -o nounset
-
 WORKDIR=$(dirname $0)
 MONITOR_LOG=$WORKDIR/monitor.log
 
 function getJarPath
 {
   NAME=$1
+  CLASS=$2
   find $WORKDIR/../$NAME -name "${NAME}*.jar"
 }
 
 function install {
+  rm -f $WORKDIR/*.jar || true
   ln $(getJarPath pipeline) $WORKDIR/pipeline.jar
   ln $(getJarPath gwSocket) $WORKDIR/gwSocket.jar
   ln $(getJarPath monitor) $WORKDIR/monitor.jar
+  ln $(getJarPath sound) $WORKDIR/sound.jar
 }
 
 function cleanup
 {
   kill $(jobs -p)
   [ -f $MONITOR_LOG ] && rm -f $MONITOR_LOG
-  rm -f $WORKDIR/*.jar || true
 }
 
 cleanup
@@ -46,4 +46,5 @@ done
 
 echo "FAILED. Logs of $MONITOR_LOG:"
 cat $MONITOR_LOG
+cleanup
 exit 2
