@@ -1,26 +1,37 @@
 #!/bin/bash
 
+set -o nounset
+
 WORKDIR=$(dirname $0)
 MONITOR_LOG=$WORKDIR/monitor.log
 
 function getJarPath
 {
   NAME=$1
-  find $WORKDIR/.. -name ${NAME}*.jar
+  find $WORKDIR/../$NAME -name "${NAME}*.jar"
+}
+
+function install {
+  ln $(getJarPath pipeline) $WORKDIR/pipeline.jar
+  ln $(getJarPath gwSocket) $WORKDIR/gwSocket.jar
+  ln $(getJarPath monitor) $WORKDIR/monitor.jar
 }
 
 function cleanup
 {
   kill $(jobs -p)
   [ -f $MONITOR_LOG ] && rm -f $MONITOR_LOG
+  rm -f $WORKDIR/*.jar || true
 }
 
-echo ""
+cleanup
+install
+
 echo '==> Trying to get "IT" msg via gwSocket -> pipeline -> monitor'
 
-java -jar $(getJarPath pipeline) &
-java -jar $(getJarPath gwSocket) &
-java -jar $(getJarPath monitor) > $MONITOR_LOG &
+java -jar $WORKDIR/pipeline.jar &
+java -jar $WORKDIR/gwSocket.jar &
+java -jar $WORKDIR/monitor.jar > $MONITOR_LOG &
 
 for i in {1..5}; do
   sleep 1
@@ -35,5 +46,4 @@ done
 
 echo "FAILED. Logs of $MONITOR_LOG:"
 cat $MONITOR_LOG
-cleanup
 exit 2

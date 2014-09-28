@@ -17,12 +17,10 @@
         <dependency>
             <groupId>ru.darklogic.jericho</groupId>
             <artifactId>common</artifactId>
-            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>ru.darklogic.jericho</groupId>
             <artifactId>monitor</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
