@@ -10,7 +10,7 @@
 
     <groupId>ru.darklogic.jericho</groupId>
     <artifactId>super-pom</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1.0</version>
     <modules>
         <module>monitor</module>
         <module>pipeline</module>
