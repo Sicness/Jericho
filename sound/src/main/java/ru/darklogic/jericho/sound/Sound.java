@@ -19,7 +19,7 @@ public class Sound {
     public static void main(String[] args) {
         try {
             props.read("/jericho.properties");
-            queueBind = props.get("zmq.queue.bind");
+            queueBind = props.get("zmq.queue.pub");
             if (queueBind == null) throw new IOException("Can't find zmq.queue.bind in props");
         }
         catch (IOException e){

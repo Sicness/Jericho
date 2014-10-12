@@ -20,7 +20,7 @@ public class JerichoMonitor {
         }
 
         ZmqMonitor monitor = new ZmqMonitor();
-        try { monitor.connect(props.get("zmq.queue.bind")); }
+        try { monitor.connect(props.get("zmq.queue.pub")); }
         catch(BindFormatException e){
             System.out.println("ERROR: wrong zmq monitor bind string.");
             System.exit(1);
