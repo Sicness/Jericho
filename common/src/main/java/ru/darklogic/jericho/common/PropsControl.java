@@ -8,13 +8,25 @@ import java.util.Properties;
  * Created by abalashov on 6/4/14.
  */
 public class PropsControl {
+    static PropsControl propsControl;
     Properties props = new Properties();
 
-    public void read(String fileName) throws IOException {
+    public PropsControl(String fileName) throws IOException{
         InputStream stream = null;
         stream = this.getClass().getResourceAsStream(fileName);
         if (stream == null) throw new IOException("Can't find properties file " + fileName);
         props.load(stream);
+    }
+
+    public static PropsControl getInstance(String fileName) {
+        if (propsControl == null)
+            try {
+                propsControl = new PropsControl(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        return propsControl;
     }
 
     public String get(String key){
