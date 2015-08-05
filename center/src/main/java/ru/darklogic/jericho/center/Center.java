@@ -26,7 +26,7 @@ public class Center {
     NightLight nightLight;
 
 
-    public void mainMethod(String[] args) {
+    public void mainMethod() {
         monitor = new ZmqMonitor();
         try {
             monitor.connect(queueBind);
@@ -34,6 +34,7 @@ public class Center {
             e.printStackTrace();
             System.exit(1);
         }
+        addHandlers();
 
         while (true) {
             String msg = new String(monitor.recv());
@@ -51,6 +52,6 @@ public class Center {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
         Center center = context.getBean(Center.class);
-        center.mainMethod(args);
+        center.mainMethod();
     }
 }

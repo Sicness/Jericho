@@ -66,6 +66,12 @@
                                     <version>${version}</version>
                                     <type>jar</type>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>ru.darklogic.jericho</groupId>
+                                    <artifactId>center</artifactId>
+                                    <version>${version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                             </artifactItems>
                             <stripVersion>true</stripVersion>
                             <overWriteReleases>true</overWriteReleases>
