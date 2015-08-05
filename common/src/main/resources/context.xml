@@ -8,8 +8,7 @@
     <context:annotation-config/>
     <context:component-scan base-package="ru.darklogic.jericho"/>
 
-    <context:property-placeholder
-            location="jericho.properties, file://#{systemEnvironment[CONFIG_PATH]}/jericho.properties"
-             ignore-resource-not-found="true"/>
+    <context:property-placeholder location="jericho.properties"/>
+
 
 </beans>

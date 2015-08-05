@@ -2,31 +2,31 @@ package ru.darklogic.jericho.gwSocket; /**
  * Created by abalashov on 6/3/14.
  */
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 import org.zeromq.ZMQ;
 
 import java.io.IOException;
-import ru.darklogic.jericho.common.PropsControl;
 
+@Component
 public class GwSock {
-    static PropsControl props = new PropsControl();
-    public static void main(String[] args){
-        try {
-            props.read("/jericho.properties");
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+    @Value("${zmq.queue.in}")
+    String zmqIn;
+    @Value("${gwSocket.tcp.bind}")
+    String tcpBind;
 
+    public void mainMethod(String[] args){
         ZMQ.Context context = ZMQ.context(1);
         TcpSock sock = new TcpSock();
         ZMQ.Socket zmq = context.socket(ZMQ.REQ);
 
         try {
-            zmq.connect(props.get("zmq.queue.in"));
+            zmq.connect(zmqIn);
 
             System.out.println("Binding TCP socket on " +
-                    props.get("gwSocket.tcp.bind") + "...");
-            sock.bind(Integer.parseInt(props.get("gwSocket.tcp.bind")));
+                    tcpBind + "...");
+            sock.bind(Integer.parseInt(tcpBind));
         }
         catch (IOException e){
             System.out.println(e.toString());
@@ -43,5 +43,11 @@ public class GwSock {
         catch (IOException e){
             System.out.println(e.toString());
         }
+    }
+
+    public static void main(String[] args) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+        GwSock center = context.getBean(GwSock.class);
+        center.mainMethod(args);
     }
 }

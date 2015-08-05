@@ -4,27 +4,19 @@ package ru.darklogic.jericho.pipeline;
  * Created by abalashov on 6/2/14.
  */
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 import org.zeromq.ZMQ;
-import ru.darklogic.jericho.common.PropsControl;
 
 import java.io.IOException;
 
+@Component
 public class Pipeline {
-    static PropsControl props = new PropsControl();
-    static String queueBind = null;
+    @Value("${zmq.queue.bind}")
+    String queueBind;
 
-    public static void main(String[] args){
-        String bindAddr = null;
-        try {
-            props.read("/jericho.properties");
-            queueBind = props.get("zmq.queue.bind");
-            if (queueBind == null) throw new IOException("Can't find zmq.queue.bind in props");
-        }
-        catch (IOException e){
-            System.out.println("Error at reading properties: " + e);
-            System.exit(1);
-        }
-
+    public void mainMethod(){
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket queue = context.socket(ZMQ.PUB);
 
@@ -39,5 +31,11 @@ public class Pipeline {
             queue.send(data);
             incomeSock.send("OK");
         }
+    }
+
+    public static void main(String[] args) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+        Pipeline center = context.getBean(Pipeline.class);
+        center.mainMethod();
     }
 }
