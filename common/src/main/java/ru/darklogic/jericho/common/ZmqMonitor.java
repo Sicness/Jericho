@@ -42,4 +42,8 @@ public class ZmqMonitor {
     public byte[] recv(){
         return this.sub.recv();
     }
+
+    public void setRcvTimeout(int millis) {
+        sub.setReceiveTimeOut(millis);
+    }
 }
