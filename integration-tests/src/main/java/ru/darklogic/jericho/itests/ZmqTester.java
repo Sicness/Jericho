@@ -1,6 +1,7 @@
 package ru.darklogic.jericho.itests;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.zeromq.ZMQ;
 import ru.darklogic.jericho.common.BindFormatException;
 import ru.darklogic.jericho.common.ZmqMonitor;
@@ -11,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * Created by Sicness on 05.08.2015.
  */
+@Component
 public class ZmqTester implements Runnable{
     ZmqMonitor zmqMonitor;
     ZMQ.Socket zmqIn;
@@ -24,10 +26,12 @@ public class ZmqTester implements Runnable{
     @Value("${zmq.queue.pub}")
     String zmqPub;
 
-    @Value("${zmq.waitForSuccess}")
-    int waitForSuccess;
+    @Value("${zmq.wait}")
+    String waitForSuccessStr;
 
-    void init() {
+    public void init() {
+        System.out.println("zmqPub=" + zmqPub);
+        zmqMonitor = new ZmqMonitor();
         try {
             zmqMonitor.connect(zmqPub);
             return;
@@ -70,7 +74,7 @@ public class ZmqTester implements Runnable{
     public void run() {
         String buf;
         long start = System.currentTimeMillis();
-        while (start + waitForSuccess < System.currentTimeMillis()) {
+        while (start + Integer.parseInt(waitForSuccessStr) < System.currentTimeMillis()) {
             buf = new String(zmqMonitor.recv());
             if (buf.equals(expect)) {
                 success.set(true);
