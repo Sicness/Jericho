@@ -24,8 +24,7 @@ public class GwSock {
         try {
             zmq.connect(zmqIn);
 
-            System.out.println("Binding TCP socket on " +
-                    tcpBind + "...");
+            System.out.println("Binding TCP socket on " + tcpBind + "...");
             sock.bind(Integer.parseInt(tcpBind));
         }
         catch (IOException e){

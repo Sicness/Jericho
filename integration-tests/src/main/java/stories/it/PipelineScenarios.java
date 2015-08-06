@@ -1,9 +1,16 @@
 package stories.it;
 
+import org.jbehave.core.Embeddable;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
+import org.jbehave.core.embedder.StoryControls;
+import org.jbehave.core.failures.FailingUponPendingStep;
+import org.jbehave.core.io.LoadFromClasspath;
 import org.jbehave.core.io.LoadFromRelativeFile;
+import org.jbehave.core.io.StoryFinder;
+import org.jbehave.core.junit.JUnitStories;
 import org.jbehave.core.junit.JUnitStory;
+import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.spring.SpringStepsFactory;
@@ -13,27 +20,32 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.jbehave.core.io.CodeLocations.codeLocationFromClass;
 
 /**
  * Created by Sicness on 17.02.2015.
  */
-public class PipelineScenarios extends JUnitStory {
+public class PipelineScenarios extends JUnitStories {
     @Override
     public Configuration configuration() {
-        URL storyURL = null;
-        try {
-            String searchBase = codeLocationFromClass(getClass()).getFile();
-            // This requires you to start Maven from the project directory
-            storyURL = new URL("file://" + System.getProperty("user.dir"));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-        return new MostUsefulConfiguration().useStoryLoader(
-                new LoadFromRelativeFile(storyURL)).useStoryReporterBuilder(
-                new StoryReporterBuilder().withFormats(StoryReporterBuilder.Format.HTML,
-                        StoryReporterBuilder.Format.STATS).withFailureTrace(true));
+        Class<? extends Embeddable> embeddableClass = this.getClass();
+        Configuration configuration = super.configuration();
+        configuration.useStoryLoader(new LoadFromClasspath(this.getClass()));
+
+        StoryReporterBuilder builder = new StoryReporterBuilder();
+        Format[] formats = new Format[]{Format.CONSOLE, Format.HTML,
+                Format.XML, Format.STATS, Format.HTML_TEMPLATE};
+        builder.withFormats(formats).withCodeLocation(codeLocationFromClass(getClass()));
+
+        StoryControls storyControls = new StoryControls();
+        storyControls.doIgnoreMetaFiltersIfGivenStory(true);
+
+        return configuration.useStoryReporterBuilder(builder)
+                .usePendingStepStrategy(new FailingUponPendingStep())
+                .useStoryControls(storyControls);
     }
 
     @Override
@@ -61,5 +73,12 @@ public class PipelineScenarios extends JUnitStory {
         } catch (Throwable e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected List<String> storyPaths() {
+        StoryFinder finder = new StoryFinder();
+        String searchBase = codeLocationFromClass(getClass()).getFile();
+        return finder.findPaths(searchBase, Arrays.asList(getStoriesGlob()), null);
     }
 }

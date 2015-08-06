@@ -12,6 +12,10 @@
     <artifactId>integration-tests</artifactId>
     <packaging>jar</packaging>
 
+    <properties>
+        <skipTest>true</skipTest>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>ru.darklogic.jericho</groupId>
@@ -45,6 +49,7 @@
                         <id>run-stories-as-embeddables</id>
                         <phase>integration-test</phase>
                         <configuration>
+                            <skip>${skipTest}</skip>
                             <includes>
                                 <include>**/*Scenarios.java</include>
                             </includes>
@@ -102,4 +107,12 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>integration-tests</id>
+            <properties>
+                <skipTest>false</skipTest>
+            </properties>
+        </profile>
+    </profiles>
 </project>

@@ -15,11 +15,10 @@ import ru.darklogic.jericho.itests.ZmqTester;
  */
 @Component
 public class PipelineSteps {
-    int i;
     @Autowired
     ZmqTester zmqTester;
 
-    @Given("ZmqTester")
+    @Given("ZmqTester object")
     public void initMonitor() {
         zmqTester.init();
     }

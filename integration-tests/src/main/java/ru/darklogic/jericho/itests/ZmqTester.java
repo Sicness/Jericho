@@ -34,12 +34,14 @@ public class ZmqTester implements Runnable{
         zmqMonitor = new ZmqMonitor();
         try {
             zmqMonitor.connect(zmqPub);
-            return;
         } catch (BindFormatException e) {
             e.printStackTrace();
         }
         context = ZMQ.context(1);
         zmqIn = context.socket(ZMQ.REQ);
+        zmqIn.setSendTimeOut(1000);
+        zmqIn.setReceiveTimeOut(1000);
+        zmqIn.connect(zmq);
         zmqMonitor.setRcvTimeout(500);
         success = new AtomicBoolean();
         stopped = new AtomicBoolean();
@@ -74,7 +76,7 @@ public class ZmqTester implements Runnable{
     public void run() {
         String buf;
         long start = System.currentTimeMillis();
-        while (start + Integer.parseInt(waitForSuccessStr) < System.currentTimeMillis()) {
+        while (start + Integer.parseInt(waitForSuccessStr) >= System.currentTimeMillis()) {
             buf = new String(zmqMonitor.recv());
             if (buf.equals(expect)) {
                 success.set(true);
